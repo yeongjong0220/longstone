@@ -1,0 +1,17 @@
+{
+    "exercise": "The_Seal",
+    "phase_1_rolling": {
+        "knee_angle": {
+            "mean": 35.64,
+            "std": 2.78,
+            "min": 30.63,
+            "max": 43.09
+        },
+        "hip_angle": {
+            "mean": 80.73,
+            "std": 2.19,
+            "min": 66.91,
+            "max": 84.79
+        }
+    }
+}
