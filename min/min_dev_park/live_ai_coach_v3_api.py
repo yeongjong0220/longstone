@@ -54,18 +54,31 @@ options = vision.PoseLandmarkerOptions(
 detector = vision.PoseLandmarker.create_from_options(options)
 
 # 자세별 기준 각도 (단위: 도). 골든 스탠다드 데이터로 추후 튜닝 필요.
+# landmarks: 코칭 화면에서 표시할 관절 인덱스 (자세별 시각 강조용)
+# connections: 그 관절들을 잇는 선 (스틱 형태로 자세 라인 강조)
+# MediaPipe Pose 인덱스 — 0:코, 11:좌어깨, 13:좌팔꿈치, 15:좌손목,
+#                       23:좌엉덩이, 25:좌무릎, 27:좌발목
 POSE_CONFIG = {
     "The_Seal": {
         "ref_hip": 80.0, "ref_knee": 35.0, "tolerance": 15.0,
         "name_kr": "더 씰", "name_en": "The Seal",
+        # 작게 말린 C-커브를 보여주기 위해 머리(코)~팔(팔꿈치/손목)까지 포함
+        "landmarks":   [0, 11, 13, 15, 23, 25, 27],
+        "connections": [(11, 13), (13, 15), (11, 23), (23, 25), (25, 27)],
     },
     "Spine_Stretch": {
         "ref_hip": 80.0, "ref_knee": 175.0, "tolerance": 15.0,
         "name_kr": "스파인 스트레치", "name_en": "Spine Stretch",
+        # 앞으로 숙인 정도(코)와 펴진 다리 라인 강조
+        "landmarks":   [0, 11, 23, 25, 27],
+        "connections": [(11, 23), (23, 25), (25, 27)],
     },
     "Bridging": {
         "ref_hip": 170.0, "ref_knee": 90.0, "tolerance": 15.0,
         "name_kr": "브릿징", "name_en": "Bridging",
+        # 누운 자세이므로 머리는 빼고 어깨~발목 직선 라인만
+        "landmarks":   [11, 23, 25, 27],
+        "connections": [(11, 23), (23, 25), (25, 27)],
     },
 }
 POSE_ORDER = ["The_Seal", "Spine_Stretch", "Bridging"]
@@ -95,9 +108,8 @@ def process_coordinate(series, window=15, poly_order=3, threshold=3):
     return smoothed
 
 # ==========================================
-# 3. UI 박스 / Hover 트리거 유틸
+# 3. UI 박스 유틸
 # ==========================================
-HOVER_DURATION = 1.5  # 초 — 박스에 손을 1.5초 올리면 선택/트리거
 
 def get_selection_boxes(image_w, image_h):
     """3개의 자세 선택 박스 (가로로 배치)."""
@@ -113,14 +125,21 @@ def get_selection_boxes(image_w, image_h):
         boxes[key] = (x1, y, x1 + box_w, y + box_h)
     return boxes
 
-def get_feedback_box(image_w, image_h):
-    """피드백 트리거 박스 (우상단)."""
+def get_action_boxes(image_w, image_h):
+    """코칭 화면 우측에 세로로 배치된 액션 박스들 (FEEDBACK / RESELECT / QUIT)."""
     box_w = int(image_w * 0.22)
     box_h = int(image_h * 0.13)
     margin = 15
+    gap = 10
     x1 = image_w - box_w - margin
-    y1 = margin + 40  # 상단 텍스트와 겹치지 않게
-    return (x1, y1, x1 + box_w, y1 + box_h)
+    y_fb = margin + 40  # 상단 텍스트와 겹치지 않게
+    y_re = y_fb + box_h + gap
+    y_q  = y_re + box_h + gap
+    return {
+        "FEEDBACK": (x1, y_fb, x1 + box_w, y_fb + box_h),
+        "RESELECT": (x1, y_re, x1 + box_w, y_re + box_h),
+        "QUIT":     (x1, y_q,  x1 + box_w, y_q  + box_h),
+    }
 
 def point_in_box(px, py, box):
     x1, y1, x2, y2 = box
@@ -142,21 +161,72 @@ def draw_box(image, box, label, progress, active, base_color=(180, 180, 180), hi
     ty = y1 + (y2 - y1 + th) // 2 - 10
     cv2.putText(image, label, (tx, ty), cv2.FONT_HERSHEY_SIMPLEX, 0.7, color, 2)
 
-def get_landmark_points(landmarks, image_w, image_h, indices):
-    """주어진 landmark 인덱스들 중 화면 안에 있고 visibility가 충분한 점을 반환."""
-    candidates = []
-    for idx in indices:
-        lm = landmarks[idx]
-        x, y = int(lm.x * image_w), int(lm.y * image_h)
-        vis = getattr(lm, 'visibility', 1.0)
-        if vis > 0.5 and 0 <= x < image_w and 0 <= y < image_h:
-            candidates.append((x, y))
-    return candidates
+# 주먹 클릭 — 양손 모두 사용 가능
+# MediaPipe Pose 인덱스: 13/14 = 좌/우 팔꿈치, 15/16 = 좌/우 손목,
+#                       17/18 = 좌/우 새끼, 19/20 = 좌/우 검지, 21/22 = 좌/우 엄지
+FIST_HANDS = [
+    {"name": "left",  "wrist": 15, "elbow": 13, "fingers": [17, 19, 21]},
+    {"name": "right", "wrist": 16, "elbow": 14, "fingers": [18, 20, 22]},
+]
+# 손가락 끝 평균 거리 / 손목-팔꿈치 거리. 이 비율 미만이면 주먹 쥔 상태로 판정.
+# 카메라 거리에 영향 받지 않도록 팔뚝 길이로 정규화.
+# 펴진 손 ≈ 0.55~0.85, 주먹 ≈ 0.10~0.25.
+FIST_RATIO_THRESHOLD = 0.40
+# 주먹 → 펴는(release) 순간에 클릭 발생 — 마우스 클릭과 동일한 UX.
 
-# 손목(15, 16): 코칭 단계 FEEDBACK 박스 트리거에 사용
-WRIST_INDICES = [15, 16]
-# 검지(19, 20): 선택 화면에서 더 정밀한 포인터로 사용
-INDEX_FINGER_INDICES = [19, 20]
+fist_state = {"left": False, "right": False}      # 직전 프레임에 주먹이었는가
+fist_start_pos = {"left": None, "right": None}    # 주먹 시작 시점의 포인터(손목) 좌표
+
+def get_fist_pointer(landmarks, image_w, image_h, hand_cfg):
+    """반환: (포인터(손목 좌표) | None, 주먹 여부 bool)."""
+    wrist = landmarks[hand_cfg["wrist"]]
+    elbow = landmarks[hand_cfg["elbow"]]
+    if getattr(wrist, "visibility", 0.0) < 0.5 or getattr(elbow, "visibility", 0.0) < 0.5:
+        return None, False
+    wx, wy = int(wrist.x * image_w), int(wrist.y * image_h)
+    ex, ey = int(elbow.x * image_w), int(elbow.y * image_h)
+    forearm_len = np.hypot(wx - ex, wy - ey)
+    if forearm_len < 1:
+        return None, False
+    finger_dists = []
+    for fi in hand_cfg["fingers"]:
+        f = landmarks[fi]
+        fx, fy = int(f.x * image_w), int(f.y * image_h)
+        finger_dists.append(np.hypot(fx - wx, fy - wy))
+    avg_finger_dist = float(np.mean(finger_dists))
+    ratio = avg_finger_dist / forearm_len
+    return (wx, wy), ratio < FIST_RATIO_THRESHOLD
+
+def update_fist_click(landmarks, image_w, image_h):
+    """양손 모두 검사. 반환: (시각화용 포인터 리스트, 클릭 발생 좌표 or None)."""
+    pointers = []
+    click_pos = None
+    for cfg in FIST_HANDS:
+        name = cfg["name"]
+        if landmarks is None:
+            fist_state[name] = False
+            fist_start_pos[name] = None
+            continue
+        pointer, is_fist = get_fist_pointer(landmarks, image_w, image_h, cfg)
+        if pointer is None:
+            fist_state[name] = False
+            fist_start_pos[name] = None
+            continue
+        pointers.append((pointer, is_fist))
+        was_fist = fist_state[name]
+        if is_fist and not was_fist:
+            fist_start_pos[name] = pointer
+        elif not is_fist and was_fist:
+            if click_pos is None:
+                click_pos = fist_start_pos[name]
+            fist_start_pos[name] = None
+        fist_state[name] = is_fist
+    return pointers, click_pos
+
+def reset_fist():
+    for cfg in FIST_HANDS:
+        fist_state[cfg["name"]] = False
+        fist_start_pos[cfg["name"]] = None
 
 # ==========================================
 # 4. 상태 변수
@@ -166,29 +236,6 @@ STATE_COACHING = "coaching"
 state = STATE_SELECTION
 
 selected_pose = None  # 선택된 자세 키 (예: "The_Seal")
-
-# Hover 추적
-hover_target = None
-hover_start_time = None
-
-def update_hover(target, now):
-    """target이 같은 박스 위에 머물면 진행률(0~1) 반환, 1.0 도달 시 트리거."""
-    global hover_target, hover_start_time
-    if target != hover_target:
-        hover_target = target
-        hover_start_time = now if target else None
-        return 0.0, False
-    if hover_target is None:
-        return 0.0, False
-    elapsed = now - hover_start_time
-    progress = min(elapsed / HOVER_DURATION, 1.0)
-    triggered = elapsed >= HOVER_DURATION
-    return progress, triggered
-
-def reset_hover():
-    global hover_target, hover_start_time
-    hover_target = None
-    hover_start_time = None
 
 # 코칭 단계용 버퍼
 buffer_window = 15
@@ -202,7 +249,7 @@ cap = cv2.VideoCapture(0)
 
 print("\n" + "*"*50)
 print("🎥 실시간 자세 분석 시작")
-print("- [선택 화면] 화면의 The Seal / Spine Stretch / Bridging 박스에 손목을 1.5초 올려 자세를 선택하세요.")
+print("- [선택 화면] 박스 안에서 주먹을 쥐었다 펴면(클릭) 자세가 선택됩니다. 양손 모두 가능.")
 print("- [코칭 화면] 자세를 취한 뒤 우측 상단 'FEEDBACK' 박스에 손을 1.5초 올리면 AI 피드백이 생성됩니다.")
 print("- 'r' 키: 자세 다시 선택 / 'f' 키: 피드백 즉시 생성 (백업) / 'q' 키: 종료")
 print("*"*50)
@@ -276,46 +323,52 @@ while cap.isOpened():
     landmarks = results.pose_landmarks[0] if len(results.pose_landmarks) > 0 else None
 
     # ----------------------------------------
-    # 단계 1: 자세 선택 (Hover-box)
+    # 단계 1: 자세 선택 (주먹 클릭)
     # ----------------------------------------
     if state == STATE_SELECTION:
         boxes = get_selection_boxes(w, h)
 
-        # 손목 위치 추출 (왼손 15 / 오른손 16)
-        hand_points = get_landmark_points(landmarks, w, h, WRIST_INDICES) if landmarks else []
+        # 양손 주먹 검사 — 주먹을 폈을 때(release) click 발생
+        pointers, click_pos = update_fist_click(landmarks, w, h)
 
-        # 어떤 박스 위에 손이 있는지 판정
-        active_target = None
-        for key, box in boxes.items():
-            for (px, py) in hand_points:
+        # 현재 어느 박스 위에 포인터(손목)가 있는지 (시각 강조용)
+        hovering = None
+        for (px, py), _ in pointers:
+            for key, box in boxes.items():
                 if point_in_box(px, py, box):
-                    active_target = key
+                    hovering = key
                     break
-            if active_target:
+            if hovering:
                 break
 
-        progress, triggered = update_hover(active_target, now)
-
-        # 박스 그리기
+        # 박스 그리기 (hover 진행바 없음 — 클릭 즉시 트리거)
         for key, box in boxes.items():
             label = POSE_CONFIG[key]["name_en"]
-            is_active = (key == active_target)
-            draw_box(image, box, label, progress if is_active else 0.0, is_active)
+            is_active = (key == hovering)
+            draw_box(image, box, label, 0.0, is_active)
 
-        # 손목 위치 표시
-        for (px, py) in hand_points:
-            cv2.circle(image, (px, py), 10, (0, 255, 255), 2)
+        # 포인터(손목) 표시 — 주먹 쥐면 빨간 원 채움, 펴면 노란 외곽선
+        for (px, py), is_fist in pointers:
+            if is_fist:
+                cv2.circle(image, (px, py), 14, (0, 0, 255), -1)
+                cv2.circle(image, (px, py), 20, (0, 0, 255), 2)
+            else:
+                cv2.circle(image, (px, py), 12, (0, 255, 255), 2)
 
-        cv2.putText(image, "Hover your wrist on a pose for 1.5s",
+        cv2.putText(image, "Make a fist inside a box, then open to click",
                     (20, 35), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
 
-        if triggered and active_target:
-            selected_pose = active_target
-            print(f"✅ 자세 선택됨: {POSE_CONFIG[selected_pose]['name_en']}")
-            state = STATE_COACHING
-            pose_buffer.clear()
-            error_log = {"hip": [], "knee": []}
-            reset_hover()
+        # 클릭이 박스 안에서 발생했으면 선택 처리
+        if click_pos:
+            for key, box in boxes.items():
+                if point_in_box(click_pos[0], click_pos[1], box):
+                    selected_pose = key
+                    print(f"✅ 자세 선택됨: {POSE_CONFIG[selected_pose]['name_en']}")
+                    state = STATE_COACHING
+                    pose_buffer.clear()
+                    error_log = {"hip": [], "knee": []}
+                    reset_fist()
+                    break
 
     # ----------------------------------------
     # 단계 2: 코칭 (오류 누적 + 모션 트리거 피드백)
@@ -365,10 +418,20 @@ while cap.isOpened():
                     error_log["knee"].append(cur_knee)
                 err_count = len(error_log["hip"])
 
-                # 관절 점 그리기
-                for lm in [landmarks[11], landmarks[23], landmarks[25], landmarks[27]]:
+                # 자세별 관절/연결선 그리기 — 평가에 의미 있는 점만 강조
+                pt_color = (0, 0, 255) if status == "[WARNING]" else (255, 0, 0)
+                pose_landmarks = cfg.get("landmarks", [11, 23, 25, 27])
+                pose_connections = cfg.get("connections", [])
+                pts = {}
+                for idx in pose_landmarks:
+                    lm = landmarks[idx]
                     cx, cy = int(lm.x * w), int(lm.y * h)
-                    cv2.circle(image, (cx, cy), 5, (255, 0, 0), -1)
+                    pts[idx] = (cx, cy)
+                for a, b in pose_connections:
+                    if a in pts and b in pts:
+                        cv2.line(image, pts[a], pts[b], pt_color, 2)
+                for (cx, cy) in pts.values():
+                    cv2.circle(image, (cx, cy), 5, pt_color, -1)
             except Exception:
                 pass
 
@@ -378,24 +441,57 @@ while cap.isOpened():
         cv2.putText(image, f"Hip: {int(cur_hip)} (Ref: {int(cfg['ref_hip'])})", (10, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         cv2.putText(image, f"Knee: {int(cur_knee)} (Ref: {int(cfg['ref_knee'])})", (10, 130), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         cv2.putText(image, f"Error Frames: {err_count}", (10, 160), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 165, 255), 2)
-        cv2.putText(image, "[r] reselect  [q] quit", (10, h - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.55, (180, 180, 180), 1)
+        cv2.putText(image, "Make a fist inside FEEDBACK/RESELECT/QUIT, then open  (or [r]/[q])", (10, h - 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (180, 180, 180), 1)
 
-        # 피드백 트리거 박스 (손목으로 hover)
-        fb_box = get_feedback_box(w, h)
-        hand_points = get_landmark_points(landmarks, w, h, WRIST_INDICES) if landmarks else []
-        on_fb = any(point_in_box(px, py, fb_box) for (px, py) in hand_points)
+        # 액션 박스 (FEEDBACK / RESELECT / QUIT) — 주먹 클릭
+        action_boxes = get_action_boxes(w, h)
+        pointers, click_pos = update_fist_click(landmarks, w, h)
 
-        active_target = "FEEDBACK" if on_fb else None
-        progress, triggered = update_hover(active_target, now)
-        draw_box(image, fb_box, "FEEDBACK", progress if on_fb else 0.0, on_fb)
+        # 현재 어느 박스 위에 포인터가 있는지 (시각 강조용)
+        active_target = None
+        for (px, py), _ in pointers:
+            for key, box in action_boxes.items():
+                if point_in_box(px, py, box):
+                    active_target = key
+                    break
+            if active_target:
+                break
 
-        for (px, py) in hand_points:
-            cv2.circle(image, (px, py), 10, (0, 255, 255), 2)
+        for key, box in action_boxes.items():
+            is_active = (key == active_target)
+            draw_box(image, box, key, 0.0, is_active)
 
-        if triggered:
+        # 포인터(손목) — 주먹이면 빨강 채움, 펴면 노랑 외곽선
+        for (px, py), is_fist in pointers:
+            if is_fist:
+                cv2.circle(image, (px, py), 14, (0, 0, 255), -1)
+                cv2.circle(image, (px, py), 20, (0, 0, 255), 2)
+            else:
+                cv2.circle(image, (px, py), 12, (0, 255, 255), 2)
+
+        # 클릭이 박스 안에서 발생했으면 해당 액션 실행
+        clicked_target = None
+        if click_pos:
+            for key, box in action_boxes.items():
+                if point_in_box(click_pos[0], click_pos[1], box):
+                    clicked_target = key
+                    break
+
+        if clicked_target == "FEEDBACK":
             request_feedback(selected_pose, error_log)
             error_log = {"hip": [], "knee": []}
-            reset_hover()
+            reset_fist()
+        elif clicked_target == "RESELECT":
+            state = STATE_SELECTION
+            selected_pose = None
+            pose_buffer.clear()
+            error_log = {"hip": [], "knee": []}
+            reset_fist()
+            print("🔄 자세 선택 화면으로 돌아갑니다.")
+        elif clicked_target == "QUIT":
+            print("👋 프로그램을 종료합니다.")
+            reset_fist()
+            break
 
     cv2.imshow('On-device Pilates Coach (API)', image)
     key = cv2.waitKey(1) & 0xFF
@@ -409,7 +505,7 @@ while cap.isOpened():
         selected_pose = None
         pose_buffer.clear()
         error_log = {"hip": [], "knee": []}
-        reset_hover()
+        reset_fist()
         print("🔄 자세 선택 화면으로 돌아갑니다.")
     elif key == ord('f') and state == STATE_COACHING:
         # 백업: 키보드 트리거도 유지
