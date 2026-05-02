@@ -1,5 +1,11 @@
 *.pt
 *.mp4
+*.task
 __pycache__/
 .DS_Store
+.env
+.env.local
 docs/
+min_dev_park.zip
+min/llm_finetune/checkpoints/
+min/llm_finetune/data/sft.jsonl
