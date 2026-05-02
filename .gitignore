@@ -7,5 +7,6 @@ __pycache__/
 .env.local
 docs/
 min_dev_park.zip
+min/llm_finetune/.venv/
 min/llm_finetune/checkpoints/
 min/llm_finetune/data/sft.jsonl
