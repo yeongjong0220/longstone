@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## 현재 작업 위치
 - **`min/min_dev_park/`** — 현재 진행 중인 메인 코드. 최신 엔트리포인트는 `live_ai_coach_v3_api.py` (v2 → v3 순으로 발전).
 - **`min/preproccessing/`** — 데이터 전처리 파이프라인. 파일명 숫자 prefix(`00_` → `01_` → `02_`)가 실행 순서. 폴더명 오타(preproccessing)는 의도된 것이니 변경하지 말 것.
+- **`min/llm_finetune/`** — LLM 파인튜닝 인프라(env_check, train_full, train_lora, infer, reports). 작업 컨텍스트(검증된 의존성 페어·함정)는 [`min/llm_finetune/CLAUDE.md`](min/llm_finetune/CLAUDE.md) 참조.
 - **`dev/`, `coals_EDA/`** — 초기 프로토타입. 참고용이며 더 이상 활성 개발 대상 아님.
 - **`docs/`** — 발표자료(PDF/PPTX)와 설계 문서. `pipeline.md`가 아키텍처 단일 출처.
 
@@ -24,6 +25,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 스택 / 실행
 Python · MediaPipe Pose · YOLOv8 · OpenCV · transformers(Gemma-2-2b 4-bit). `requirements.txt`/`pyproject.toml`/Makefile/테스트 프레임워크 모두 **없음**. 스크립트는 `python <파일>.py`로 단독 실행하며 대부분 웹캠 입력 기반.
+
+LLM 파인튜닝은 메인 코드와 격리된 자체 venv(`min/llm_finetune/.venv/`) 사용 — 의존성 충돌 회피 + 학습 도구 분리. 그쪽 작업 시 `min/llm_finetune/CLAUDE.md`의 검증 페어를 따를 것.
 
 ## 작업 시 주의
 - 문서·커밋·논의 언어는 한국어가 기본.
