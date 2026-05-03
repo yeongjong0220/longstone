@@ -1,0 +1,13 @@
+# RTX 3050 8GB + Python 3.10 환경에서 2026-05-03 검증된 페어
+# 변경 시 segfault·NameError 위험 — min/llm_finetune/CLAUDE.md "환경" 섹션 참조
+#
+# torch는 PyPI 기본 wheel이 CPU only이므로 별도 설치 필요:
+#   pip install torch==2.11.0 --index-url https://download.pytorch.org/whl/cu126
+torch==2.11.0
+transformers==4.46.0
+trl==0.12.2
+peft==0.13.2
+accelerate==1.0.1
+bitsandbytes==0.45.0
+datasets==3.6.0
+pyarrow==19.0.1

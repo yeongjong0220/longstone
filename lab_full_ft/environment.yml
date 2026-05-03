@@ -1,0 +1,9 @@
+name: longstone-llm-ft
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu126
+      - -r requirements.txt
