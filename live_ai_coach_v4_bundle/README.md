@@ -75,6 +75,99 @@ stateDiagram-v2
     end note
 ```
 
+### 🧠 모델 아키텍처 — `TemporalLifterWithPhaseHead`
+
+[pilates_temporal_lifter/model.py](pilates_temporal_lifter/model.py)에 정의된 멀티태스크 시간 합성곱 모델로, **2D 관절 시퀀스 → 3D 관절 시퀀스 + 운동 국면(phase)** 을 동시에 예측합니다.
+
+```mermaid
+flowchart TB
+    Input["입력 텐서<br/>(B, T=81, J=15, C=3)<br/>C = (x, y, observed_mask)"]:::io
+    Input --> Reshape["Reshape + Transpose<br/>(B, T, J·C) → (B, 45, T)"]:::reshape
+    Reshape --> Proj["Input Projection<br/>Conv1d 45 → 256, k=1"]:::proj
+
+    Proj --> B1
+    subgraph TCN["🧱 Dilated Residual TCN (4 blocks)"]
+        direction TB
+        B1["ResidualTemporalBlock #1<br/>causal Conv1d, k=3, dilation=1<br/>hidden=256"]:::block
+        B2["ResidualTemporalBlock #2<br/>causal Conv1d, k=3, dilation=2"]:::block
+        B3["ResidualTemporalBlock #3<br/>causal Conv1d, k=3, dilation=4"]:::block
+        B4["ResidualTemporalBlock #4<br/>causal Conv1d, k=3, dilation=8"]:::block
+        B1 --> B2 --> B3 --> B4
+    end
+
+    B4 --> Feat[("공유 시계열 피처<br/>(B, 256, T)")]:::feat
+
+    Feat --> PoseHead["Pose Head<br/>Conv1d 256 → 45, k=1"]:::head
+    Feat --> PhaseHead["Phase Head<br/>Conv1d 256 → 3, k=1"]:::head
+
+    PoseHead --> Pose3D["pred_3d<br/>(B, T, 15, 3)<br/>3D 관절 좌표"]:::out
+    PhaseHead --> Phase["phase_logits<br/>(B, T, 3)<br/>국면 분류 logits"]:::out
+
+    classDef io fill:#FFE4B5,stroke:#333,stroke-width:2px
+    classDef reshape fill:#FFFACD,stroke:#999
+    classDef proj fill:#E0F4FF,stroke:#3399cc
+    classDef block fill:#B5E7FF,stroke:#0066aa,stroke-width:1.5px
+    classDef feat fill:#D4FFB5,stroke:#339933,stroke-width:2px
+    classDef head fill:#FFD6F5,stroke:#cc3399
+    classDef out fill:#FFB5B5,stroke:#cc3333,stroke-width:2px
+```
+
+#### 🔬 ResidualTemporalBlock 내부
+
+```mermaid
+flowchart LR
+    X["입력 x<br/>(B, 256, T)"]:::io --> C1["CausalConv1d<br/>k=3, dilation=d"]:::conv
+    C1 --> N1[BatchNorm1d]:::norm
+    N1 --> G1[GELU]:::act
+    G1 --> D1[Dropout 0.10]:::drop
+    D1 --> C2["CausalConv1d<br/>k=3, dilation=d"]:::conv
+    C2 --> N2[BatchNorm1d]:::norm
+    N2 --> D2[Dropout 0.10]:::drop
+    D2 --> Add(("+"))
+    X -. residual .-> Add
+    Add --> G2[GELU]:::act
+    G2 --> Y["출력<br/>(B, 256, T)"]:::io
+
+    classDef io fill:#FFE4B5,stroke:#333
+    classDef conv fill:#B5E7FF,stroke:#0066aa
+    classDef norm fill:#E0E0FF,stroke:#6666cc
+    classDef act fill:#D4FFB5,stroke:#339933
+    classDef drop fill:#FFFACD,stroke:#999
+```
+
+> 💡 **Causal 1D Convolution**: 미래 프레임을 절대 보지 않도록 좌측에만 `(k-1)·dilation` 만큼 zero-pad 후 일반 Conv1d 적용 → 실시간 추론 가능.
+
+#### 📐 텐서 차원 변화
+
+| 단계 | 텐서 모양 | 비고 |
+|---|---|---|
+| 입력 | `(B, T=81, J=15, C=3)` | (x, y, observed_mask) |
+| Reshape + Transpose | `(B, 45, T)` | Conv1d용 채널-시간 배치 |
+| Input Projection | `(B, 256, T)` | 1×1 conv |
+| TCN 4개 block 통과 | `(B, 256, T)` | 동일 차원 유지 (residual) |
+| Pose Head + reshape | `(B, T, 15, 3)` | **3D 좌표 출력** |
+| Phase Head + transpose | `(B, T, 3)` | **국면 logits 출력** |
+
+#### 🕒 시간적 수용 영역 (Receptive Field)
+
+| Block | dilation | block당 추가 | 누적 RF |
+|---|---|---|---|
+| #1 | 1 | 4 | 5 |
+| #2 | 2 | 8 | 13 |
+| #3 | 4 | 16 | 29 |
+| #4 | 8 | 32 | **61** |
+
+> 시간 t의 출력은 과거 60프레임 + 현재 1프레임을 종합 — 윈도우 크기 81보다 작아 **causal**하게 안전 동작합니다.
+
+#### 🎯 멀티태스크 학습 의도
+
+- **Pose Head** — 각 시간 t에서 15개 관절의 3D 좌표 회귀 (MPJPE 등 손실)
+- **Phase Head** — 같은 시간 t의 운동 국면 3-way 분류 (예: prepare / hold / release)
+- **공유 백본** — 두 head가 동일한 TCN 피처를 공유하여 자세와 국면이 상호 정규화됨
+- 추론 시 `predict_latest()`는 **윈도우 마지막 프레임 t=T-1** 의 출력만 취합니다.
+
+---
+
 ### 🧩 모듈 의존성
 
 ```mermaid
