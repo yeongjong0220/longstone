@@ -80,28 +80,28 @@ stateDiagram-v2
 [pilates_temporal_lifter/model.py](pilates_temporal_lifter/model.py)에 정의된 멀티태스크 시간 합성곱 모델로, **2D 관절 시퀀스 → 3D 관절 시퀀스 + 운동 국면(phase)** 을 동시에 예측합니다.
 
 ```mermaid
-flowchart TB
+flowchart LR
     Input["입력 텐서<br/>(B, T=81, J=15, C=3)<br/>C = (x, y, observed_mask)"]:::io
-    Input --> Reshape["Reshape + Transpose<br/>(B, T, J·C) → (B, 45, T)"]:::reshape
-    Reshape --> Proj["Input Projection<br/>Conv1d 45 → 256, k=1"]:::proj
+    Input --> Reshape["Reshape +<br/>Transpose<br/>→ (B, 45, T)"]:::reshape
+    Reshape --> Proj["Input<br/>Projection<br/>Conv1d 45→256<br/>k=1"]:::proj
 
     Proj --> B1
     subgraph TCN["🧱 Dilated Residual TCN (4 blocks)"]
-        direction TB
-        B1["ResidualTemporalBlock #1<br/>causal Conv1d, k=3, dilation=1<br/>hidden=256"]:::block
-        B2["ResidualTemporalBlock #2<br/>causal Conv1d, k=3, dilation=2"]:::block
-        B3["ResidualTemporalBlock #3<br/>causal Conv1d, k=3, dilation=4"]:::block
-        B4["ResidualTemporalBlock #4<br/>causal Conv1d, k=3, dilation=8"]:::block
+        direction LR
+        B1["Block #1<br/>k=3<br/>dilation=1"]:::block
+        B2["Block #2<br/>k=3<br/>dilation=2"]:::block
+        B3["Block #3<br/>k=3<br/>dilation=4"]:::block
+        B4["Block #4<br/>k=3<br/>dilation=8"]:::block
         B1 --> B2 --> B3 --> B4
     end
 
-    B4 --> Feat[("공유 시계열 피처<br/>(B, 256, T)")]:::feat
+    B4 --> Feat[("공유 피처<br/>(B, 256, T)")]:::feat
 
-    Feat --> PoseHead["Pose Head<br/>Conv1d 256 → 45, k=1"]:::head
-    Feat --> PhaseHead["Phase Head<br/>Conv1d 256 → 3, k=1"]:::head
+    Feat --> PoseHead["Pose Head<br/>Conv1d 256→45<br/>k=1"]:::head
+    Feat --> PhaseHead["Phase Head<br/>Conv1d 256→3<br/>k=1"]:::head
 
-    PoseHead --> Pose3D["pred_3d<br/>(B, T, 15, 3)<br/>3D 관절 좌표"]:::out
-    PhaseHead --> Phase["phase_logits<br/>(B, T, 3)<br/>국면 분류 logits"]:::out
+    PoseHead --> Pose3D["pred_3d<br/>(B, T, 15, 3)<br/>3D 관절"]:::out
+    PhaseHead --> Phase["phase_logits<br/>(B, T, 3)<br/>국면 분류"]:::out
 
     classDef io fill:#FFE4B5,stroke:#333,stroke-width:2px
     classDef reshape fill:#FFFACD,stroke:#999
