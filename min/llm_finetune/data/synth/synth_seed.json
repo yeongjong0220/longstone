@@ -1,0 +1,101 @@
+{
+  "seed": 20260504,
+  "limit": 0,
+  "instruction": "당신은 정확하지만 격려하는 필라테스 강사입니다. 다음 분석 요약을 바탕으로 한국어 존댓말로 정확히 3문장 자세 교정 피드백을 작성하세요. (1) 전반적 품질, (2) top issue feature 또는 phase 기반 가장 중요한 교정점, (3) 다음 시도 시 적용할 단순 큐. 구현 디테일(Mahalanobis 등)은 언급하지 마세요.",
+  "grid_axes": {
+    "frames_axis": [
+      30,
+      45,
+      60,
+      90,
+      120
+    ],
+    "ratio_axis": [
+      0.0,
+      0.05,
+      0.15,
+      0.3,
+      0.5
+    ],
+    "severity_axis": [
+      0.5,
+      1.5,
+      3.0,
+      5.0
+    ],
+    "warn_fail_split": {
+      "0.5": [
+        1.0,
+        0.0
+      ],
+      "1.5": [
+        0.85,
+        0.15
+      ],
+      "3.0": [
+        0.55,
+        0.45
+      ],
+      "5.0": [
+        0.3,
+        0.7
+      ]
+    }
+  },
+  "poses": {
+    "The_Seal": {
+      "name_en": "The Seal",
+      "name_kr": "더 씰",
+      "has_scorer": true,
+      "phase_names": [
+        "READY",
+        "OUTBOUND",
+        "APEX",
+        "RETURN"
+      ],
+      "feature_names": [
+        "hip_angle",
+        "knee_angle",
+        "hip_velocity",
+        "knee_velocity"
+      ],
+      "target_count": 200,
+      "actual_count": 200
+    },
+    "Bridging": {
+      "name_en": "Bridging",
+      "name_kr": "브릿징",
+      "has_scorer": true,
+      "phase_names": [
+        "START",
+        "MIDDLE",
+        "END"
+      ],
+      "feature_names": [
+        "hip_angle",
+        "knee_angle",
+        "trunk_angle",
+        "hip_symmetry",
+        "knee_symmetry",
+        "hip_velocity",
+        "knee_velocity",
+        "trunk_velocity"
+      ],
+      "target_count": 175,
+      "actual_count": 175
+    },
+    "Spine_Stretch": {
+      "name_en": "Spine Stretch",
+      "name_kr": "스파인 스트레치",
+      "has_scorer": false,
+      "phase_names": [],
+      "feature_names": [
+        "hip",
+        "knee"
+      ],
+      "target_count": 125,
+      "actual_count": 125
+    }
+  },
+  "total_inputs": 500
+}

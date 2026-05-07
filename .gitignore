@@ -10,3 +10,10 @@ min_dev_park.zip
 min/llm_finetune/.venv/
 min/llm_finetune/checkpoints/
 min/llm_finetune/data/sft.jsonl
+min/llm_finetune/data/eval.jsonl
+min/llm_finetune/data/synth/inputs.jsonl
+min/llm_finetune/data/synth/raw_outputs.jsonl
+min/llm_finetune/data/synth/raw_outputs_errors.jsonl
+min/llm_finetune/data/synth/filtered.jsonl
+min/llm_finetune/data/synth/*_dryrun.*
+min/llm_finetune/reports/synth_review_queue_dryrun.md
