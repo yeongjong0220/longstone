@@ -1,0 +1,180 @@
+{
+  "timestamp": "20260524_185906",
+  "pose": "Spine_Stretch",
+  "score": {
+    "n_frames": 14,
+    "mean_score": 58.8,
+    "angle_score": 49.2,
+    "velocity_score": 97.2,
+    "ox_accuracy": 0.0,
+    "verdict": "조금 더",
+    "per_angle_accuracy": {
+      "hip": 85.7,
+      "knee": 0.0,
+      "trunk": 92.9
+    },
+    "per_angle_mean_diff": {
+      "hip": -14.46,
+      "knee": -108.35,
+      "trunk": -18.16
+    },
+    "per_angle_mean_z": {
+      "hip": 1.029,
+      "knee": 25.614,
+      "trunk": 1.249
+    },
+    "per_angle_mean_subscore": {
+      "hip": 78.2,
+      "knee": 0.0,
+      "trunk": 69.7
+    },
+    "velocity_user_dps": {
+      "hip": 1.269,
+      "knee": 3.621,
+      "trunk": 1.759
+    },
+    "velocity_expert_dps": {
+      "hip": 1.359,
+      "knee": 3.04,
+      "trunk": 2.885
+    },
+    "top_issue": "knee",
+    "top_issue_name_kr": "무릎 신전",
+    "frame_scores": [
+      37.7,
+      37.6,
+      41.0,
+      44.7,
+      48.0,
+      50.5,
+      51.5,
+      50.4,
+      49.6,
+      50.6,
+      52.7,
+      55.7,
+      57.6,
+      60.5
+    ]
+  },
+  "feedback": {
+    "text": "스파인 스트레치에서 엉덩이와 상체의 유연한 움직임은 이미 정말 잘하고 계셨어요!\n특히 무릎을 조금 더 길게 쭉 펴는 데 집중하시면 동작의 시원함이 훨씬 더 살아날 거예요.\n다음번에는 무릎 뒤쪽으로 벽을 밀어낸다는 느낌으로 시도해 보세요, 분명 더 자신감 있는 움직임을 느끼실 수 있을 거예요!",
+    "mode": "online_gemini"
+  },
+  "latency": {
+    "summary": {
+      "init_detector": {
+        "n": 1,
+        "mean_ms": 1176.97,
+        "median_ms": 1176.97,
+        "p95_ms": 1176.97,
+        "p99_ms": 1176.97,
+        "max_ms": 1176.97,
+        "min_ms": 1176.97
+      },
+      "init_lifter": {
+        "n": 1,
+        "mean_ms": 1414.24,
+        "median_ms": 1414.24,
+        "p95_ms": 1414.24,
+        "p99_ms": 1414.24,
+        "max_ms": 1414.24,
+        "min_ms": 1414.24
+      },
+      "mediapipe": {
+        "n": 78,
+        "mean_ms": 68.07,
+        "median_ms": 65.67,
+        "p95_ms": 80.52,
+        "p99_ms": 84.68,
+        "max_ms": 84.68,
+        "min_ms": 60.36
+      },
+      "landmark_smooth": {
+        "n": 78,
+        "mean_ms": 0.07,
+        "median_ms": 0.07,
+        "p95_ms": 0.09,
+        "p99_ms": 0.11,
+        "max_ms": 0.11,
+        "min_ms": 0.05
+      },
+      "lifter": {
+        "n": 78,
+        "mean_ms": 7.11,
+        "median_ms": 5.73,
+        "p95_ms": 6.75,
+        "p99_ms": 107.15,
+        "max_ms": 107.15,
+        "min_ms": 4.89
+      },
+      "frame3d_smooth": {
+        "n": 78,
+        "mean_ms": 14.02,
+        "median_ms": 13.57,
+        "p95_ms": 15.91,
+        "p99_ms": 201.73,
+        "max_ms": 201.73,
+        "min_ms": 0.01
+      },
+      "occlusion_blend": {
+        "n": 78,
+        "mean_ms": 0.02,
+        "median_ms": 0.02,
+        "p95_ms": 0.04,
+        "p99_ms": 0.05,
+        "max_ms": 0.05,
+        "min_ms": 0.0
+      },
+      "bone_lock": {
+        "n": 78,
+        "mean_ms": 17.56,
+        "median_ms": 3.46,
+        "p95_ms": 9.47,
+        "p99_ms": 1059.1,
+        "max_ms": 1059.1,
+        "min_ms": 0.0
+      },
+      "frame_total": {
+        "n": 77,
+        "mean_ms": 327.7,
+        "median_ms": 262.74,
+        "p95_ms": 426.03,
+        "p99_ms": 1912.76,
+        "max_ms": 1912.76,
+        "min_ms": 121.31
+      },
+      "scoring": {
+        "n": 1,
+        "mean_ms": 0.63,
+        "median_ms": 0.63,
+        "p95_ms": 0.63,
+        "p99_ms": 0.63,
+        "max_ms": 0.63,
+        "min_ms": 0.63
+      },
+      "llm_feedback": {
+        "n": 1,
+        "mean_ms": 9474.27,
+        "median_ms": 9474.27,
+        "p95_ms": 9474.27,
+        "p99_ms": 9474.27,
+        "max_ms": 9474.27,
+        "min_ms": 9474.27
+      }
+    },
+    "samples_count": {
+      "init_detector": 1,
+      "init_lifter": 1,
+      "mediapipe": 78,
+      "landmark_smooth": 78,
+      "lifter": 78,
+      "frame3d_smooth": 78,
+      "occlusion_blend": 78,
+      "bone_lock": 78,
+      "frame_total": 77,
+      "scoring": 1,
+      "llm_feedback": 1
+    }
+  }
+}

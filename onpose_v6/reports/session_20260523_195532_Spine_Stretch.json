@@ -1,0 +1,185 @@
+{
+  "timestamp": "20260523_195532",
+  "pose": "Spine_Stretch",
+  "score": {
+    "n_frames": 19,
+    "mean_score": 47.9,
+    "angle_score": 35.6,
+    "velocity_score": 97.2,
+    "ox_accuracy": 0.0,
+    "verdict": "다시 도전",
+    "per_angle_accuracy": {
+      "hip": 31.6,
+      "knee": 0.0,
+      "trunk": 57.9
+    },
+    "per_angle_mean_diff": {
+      "hip": -25.08,
+      "knee": -126.02,
+      "trunk": 6.71
+    },
+    "per_angle_mean_z": {
+      "hip": 1.784,
+      "knee": 29.79,
+      "trunk": 1.354
+    },
+    "per_angle_mean_subscore": {
+      "hip": 50.3,
+      "knee": 0.0,
+      "trunk": 64.8
+    },
+    "velocity_user_dps": {
+      "hip": 1.728,
+      "knee": 2.851,
+      "trunk": 3.787
+    },
+    "velocity_expert_dps": {
+      "hip": 1.359,
+      "knee": 3.04,
+      "trunk": 2.885
+    },
+    "top_issue": "knee",
+    "top_issue_name_kr": "무릎 신전",
+    "frame_scores": [
+      42.0,
+      42.0,
+      41.5,
+      41.3,
+      41.0,
+      39.9,
+      38.6,
+      37.8,
+      38.8,
+      39.8,
+      40.1,
+      37.5,
+      33.0,
+      29.3,
+      27.6,
+      27.2,
+      26.6,
+      26.0,
+      26.0
+    ]
+  },
+  "feedback": {
+    "text": "스파인 스트레치 동작을 통해 벌써 몸의 시원함을 느끼셨을 것 같아요, 아주 잘하셨습니다! 특히 무릎을 조금 더 곧게 펴주시면, 동작이 훨씬 시원하게 쭉 뻗어 나가는 느낌을 받으실 수 있을 거예요. 다음번에는 무릎 뒤쪽이 바닥을 향해 길어지는 상상을 하면서 다시 한번 함께 도전해 봐요!",
+    "mode": "online_gemini"
+  },
+  "latency": {
+    "summary": {
+      "init_detector": {
+        "n": 1,
+        "mean_ms": 229.82,
+        "median_ms": 229.82,
+        "p95_ms": 229.82,
+        "p99_ms": 229.82,
+        "max_ms": 229.82,
+        "min_ms": 229.82
+      },
+      "init_lifter": {
+        "n": 1,
+        "mean_ms": 29.53,
+        "median_ms": 29.53,
+        "p95_ms": 29.53,
+        "p99_ms": 29.53,
+        "max_ms": 29.53,
+        "min_ms": 29.53
+      },
+      "mediapipe": {
+        "n": 94,
+        "mean_ms": 67.32,
+        "median_ms": 66.34,
+        "p95_ms": 80.2,
+        "p99_ms": 83.62,
+        "max_ms": 83.62,
+        "min_ms": 60.03
+      },
+      "landmark_smooth": {
+        "n": 94,
+        "mean_ms": 0.05,
+        "median_ms": 0.04,
+        "p95_ms": 0.07,
+        "p99_ms": 0.08,
+        "max_ms": 0.08,
+        "min_ms": 0.04
+      },
+      "lifter": {
+        "n": 94,
+        "mean_ms": 5.18,
+        "median_ms": 5.03,
+        "p95_ms": 6.22,
+        "p99_ms": 9.07,
+        "max_ms": 9.07,
+        "min_ms": 4.5
+      },
+      "frame3d_smooth": {
+        "n": 94,
+        "mean_ms": 11.05,
+        "median_ms": 11.82,
+        "p95_ms": 14.27,
+        "p99_ms": 41.63,
+        "max_ms": 41.63,
+        "min_ms": 0.0
+      },
+      "occlusion_blend": {
+        "n": 94,
+        "mean_ms": 0.02,
+        "median_ms": 0.02,
+        "p95_ms": 0.03,
+        "p99_ms": 0.05,
+        "max_ms": 0.05,
+        "min_ms": 0.0
+      },
+      "bone_lock": {
+        "n": 94,
+        "mean_ms": 4.0,
+        "median_ms": 2.98,
+        "p95_ms": 8.94,
+        "p99_ms": 47.16,
+        "max_ms": 47.16,
+        "min_ms": 0.0
+      },
+      "frame_total": {
+        "n": 93,
+        "mean_ms": 196.33,
+        "median_ms": 178.13,
+        "p95_ms": 281.84,
+        "p99_ms": 678.72,
+        "max_ms": 678.72,
+        "min_ms": 121.46
+      },
+      "scoring": {
+        "n": 1,
+        "mean_ms": 0.51,
+        "median_ms": 0.51,
+        "p95_ms": 0.51,
+        "p99_ms": 0.51,
+        "max_ms": 0.51,
+        "min_ms": 0.51
+      },
+      "llm_feedback": {
+        "n": 1,
+        "mean_ms": 8733.83,
+        "median_ms": 8733.83,
+        "p95_ms": 8733.83,
+        "p99_ms": 8733.83,
+        "max_ms": 8733.83,
+        "min_ms": 8733.83
+      }
+    },
+    "samples_count": {
+      "init_detector": 1,
+      "init_lifter": 1,
+      "mediapipe": 94,
+      "landmark_smooth": 94,
+      "lifter": 94,
+      "frame3d_smooth": 94,
+      "occlusion_blend": 94,
+      "bone_lock": 94,
+      "frame_total": 93,
+      "scoring": 1,
+      "llm_feedback": 1
+    }
+  }
+}

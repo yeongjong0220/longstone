@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="UTF-8">
+<title>OnPose v6 — 세션 리포트 (The_Seal)</title>
+<style>
+  body { font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; background: #1a1a26; color: #f0f0f0; max-width: 980px; margin: 0 auto; padding: 30px 40px; }
+  h1 { color: #7ec0ff; margin: 0 0 4px 0; }
+  h2 { color: #ffd66b; border-bottom: 2px solid #353550; padding-bottom: 6px; margin-top: 36px; }
+  .meta { color: #999; font-size: 14px; margin-bottom: 24px; }
+  .score-card { background: linear-gradient(135deg, #2a2a3e, #1f1f30); border-radius: 14px; padding: 28px 32px; display: flex; gap: 36px; align-items: center; }
+  .score-big { font-size: 80px; font-weight: 700; color: #5ce0a3; line-height: 1; }
+  .score-meta div { margin: 6px 0; font-size: 17px; }
+  .verdict.good { color: #5ce0a3; } .verdict.ok { color: #5ed4f0; }
+  .verdict.warn { color: #f5c34a; } .verdict.bad { color: #f06b6b; }
+  .ox { color: #5ce0a3; font-weight: 600; }
+  .feedback { background: #232336; border-left: 4px solid #ffd66b; padding: 18px 22px; border-radius: 6px; margin-top: 24px; line-height: 1.6; }
+  .bar-row { display: flex; align-items: center; margin: 10px 0; gap: 10px; }
+  .bar-label { width: 110px; font-weight: 600; }
+  .bar-bg { flex: 1; background: #353550; height: 24px; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; transition: width 0.5s; }
+  .bar-val { width: 120px; text-align: right; }
+  .diff { color: #888; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #353550; }
+  th { background: #2a2a3e; color: #ffd66b; }
+  ul { line-height: 1.8; }
+  .footer { text-align: center; color: #666; margin-top: 50px; padding-top: 20px; border-top: 1px solid #2a2a3e; font-size: 13px; }
+</style>
+</head><body>
+<h1>OnPose v6 — 세션 리포트</h1>
+<div class="meta">20260523_120000 &nbsp;|&nbsp; 자세: <b>더 씰</b> (The_Seal) &nbsp;|&nbsp; 모드: offline_rule</div>
+
+<div class="score-card">
+  <div class="score-big">87</div>
+  <div class="score-meta">
+    <div>가중 점수: <b style="color:#5ce0a3">87.3 / 100</b></div>
+    <div>O/X 정확도: <b class="ox">88.0%</b></div>
+    <div>평가: <b class="verdict good">훌륭해요</b></div>
+    <div>분석 프레임: 92</div>
+    <div>가장 개선이 필요한 부분: <b>상체 각도</b></div>
+  </div>
+</div>
+
+<div class="feedback">
+  💬 <b>AI 코치 한 마디</b><br>더 씰 자세 정말 잘 따라오셨어요! 이미 합격선(88%)을 훌쩍 넘어서 미세한 마무리만 다듬으면 완벽해질 거예요. 다음에는 상체 정렬을 길게 늘인다는 느낌으로 가져가 보세요. 한 번만 더 해보시면 분명 더 좋아질 거예요!
+</div>
+
+<h2>각도별 정확도 (가중치 적용)</h2>
+
+        <div class="bar-row">
+          <div class="bar-label">knee</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:85%; background:#5ce0a3"></div></div>
+          <div class="bar-val">85%  <span class="diff">Δ4.5°</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">hip</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:95%; background:#5ce0a3"></div></div>
+          <div class="bar-val">95%  <span class="diff">Δ2.1°</span></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">trunk</div>
+          <div class="bar-bg"><div class="bar-fill" style="width:62%; background:#f5c34a"></div></div>
+          <div class="bar-val">62%  <span class="diff">Δ14.0°</span></div>
+        </div>
+
+<h2>자세별 세션 트렌드 (전체 히스토리)</h2>
+<ul><li><b>더 씰</b>: 3회, 평균 <span style='color:#5ed4f0'>81.4점</span></li><li><b>브릿징</b>: 1회, 평균 <span style='color:#5ed4f0'>80.0점</span></li><li><b>스파인 스트레치</b>: 1회, 평균 <span style='color:#f5c34a'>68.0점</span></li></ul>
+
+<h2>컴포넌트 별 Latency</h2>
+<table>
+  <tr><th>Component</th><th>n</th><th>mean(ms)</th><th>p95(ms)</th><th>max(ms)</th></tr>
+  <tr><td>mediapipe</td><td>92</td><td>28.50</td><td>38.20</td><td>45.10</td></tr><tr><td>lifter</td><td>92</td><td>5.20</td><td>7.80</td><td>12.30</td></tr><tr><td>bone_lock</td><td>92</td><td>1.40</td><td>2.10</td><td>3.00</td></tr><tr><td>scoring</td><td>1</td><td>12.50</td><td>12.50</td><td>12.50</td></tr><tr><td>llm_feedback</td><td>1</td><td>4.80</td><td>4.80</td><td>4.80</td></tr><tr><td>frame_total</td><td>92</td><td>42.60</td><td>55.00</td><td>68.00</td></tr>
+</table>
+
+<div class="footer">OnPose v6 — On-device pose coaching with friendly feedback &copy; 2026</div>
+</body></html>

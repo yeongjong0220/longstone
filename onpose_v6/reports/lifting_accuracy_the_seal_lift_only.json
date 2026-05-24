@@ -1,0 +1,74 @@
+{
+  "pred_csv": "..\\pilates_temporal_lifter\\predicted_eval_progress3_lift_only_v1.csv",
+  "gt_csv": "..\\pilates_temporal_lifter\\the_seal_gt3d_trim.csv",
+  "pose_key": "the_seal",
+  "frames": 207,
+  "joints_used": [
+    "Head",
+    "Neck",
+    "LShoulder",
+    "RShoulder",
+    "LElbow",
+    "RElbow",
+    "LWrist",
+    "RWrist",
+    "LHip",
+    "RHip",
+    "LKnee",
+    "Rknee",
+    "LAnkle",
+    "RAnkle",
+    "Hip"
+  ],
+  "angle_mae_deg": {
+    "hip_left": 5.723,
+    "hip_right": 4.151,
+    "knee_left": 12.728,
+    "knee_right": 10.859,
+    "trunk": 25.841,
+    "hip": 4.937,
+    "knee": 11.794
+  },
+  "angle_pck": {
+    "@10deg": {
+      "hip": 87.92270531400966,
+      "knee": 57.971014492753625,
+      "trunk": 2.4154589371980677,
+      "avg": 49.43639291465379
+    },
+    "@15deg": {
+      "hip": 93.23671497584542,
+      "knee": 73.91304347826086,
+      "trunk": 4.830917874396135,
+      "avg": 57.326892109500804
+    },
+    "@20deg": {
+      "hip": 96.61835748792271,
+      "knee": 83.09178743961353,
+      "trunk": 12.077294685990339,
+      "avg": 63.92914653784219
+    }
+  },
+  "joint_pck_root_norm": {
+    "@0.10": 21.223832528180353,
+    "@0.15": 38.22866344605475,
+    "@0.20": 54.170692431561996
+  },
+  "mpjpe_root_norm": 0.2312,
+  "onpose_accuracy_pct_strict_15deg_all3": 1.45,
+  "onpose_accuracy_pct_core_hip_knee": 72.95,
+  "pose_verdict_agreement": {
+    "tol_15deg": {
+      "angle_agreement_hip_pct": 0.0,
+      "angle_agreement_knee_pct": 0.0,
+      "verdict_agreement_pct": 0.0,
+      "n_end_frames": 0
+    },
+    "tol_20deg": {
+      "angle_agreement_hip_pct": 0.0,
+      "angle_agreement_knee_pct": 0.0,
+      "verdict_agreement_pct": 0.0,
+      "n_end_frames": 0
+    }
+  }
+}

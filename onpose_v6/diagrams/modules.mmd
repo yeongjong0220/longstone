@@ -1,0 +1,20 @@
+graph TD
+    A[onpose_v6_coach.py<br/>Main UI / State Machine]:::main --> B[core/pose_pipeline.py<br/>MediaPipe + Lifter]
+    A --> C[core/angle_scorer.py<br/>Weighted Score + O/X]:::scoring
+    A --> D[core/feedback_engine.py<br/>Friendly LLM/Offline]:::llm
+    A --> E[core/ui_helpers.py<br/>KR Font, 3-Panel]
+    A --> F[core/latency.py<br/>Per-component Lap]:::eval
+    B --> G[(pilates_temporal_lifter<br/>OnlineTemporalLifter)]
+    C --> H[(RUBRICS:<br/>The_Seal / Bridging /<br/>Spine_Stretch)]
+    D --> I{API key?}
+    I -- Yes --> J[(Gemini 2.5 Flash)]
+    I -- No --> K[(Friendly Templates)]
+    F --> L[(reports/latency.json)]:::out
+    A --> M[(reports/session.json)]:::out
+    A --> N[(assets/*.mp4<br/>Expert Videos)]
+
+    classDef main fill:#FFE4B5,stroke:#333,stroke-width:2px
+    classDef scoring fill:#B5E7FF,stroke:#0066aa
+    classDef llm fill:#D4FFB5,stroke:#339933
+    classDef eval fill:#FFD6F5,stroke:#cc3399
+    classDef out fill:#E0E0E0,stroke:#555

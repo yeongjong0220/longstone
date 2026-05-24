@@ -1,0 +1,185 @@
+{
+  "timestamp": "20260523_195401",
+  "pose": "Spine_Stretch",
+  "score": {
+    "n_frames": 19,
+    "mean_score": 50.6,
+    "angle_score": 42.6,
+    "velocity_score": 82.8,
+    "ox_accuracy": 0.0,
+    "verdict": "다시 도전",
+    "per_angle_accuracy": {
+      "hip": 78.9,
+      "knee": 0.0,
+      "trunk": 0.0
+    },
+    "per_angle_mean_diff": {
+      "hip": -6.78,
+      "knee": -104.53,
+      "trunk": 37.44
+    },
+    "per_angle_mean_z": {
+      "hip": 0.776,
+      "knee": 24.71,
+      "trunk": 2.575
+    },
+    "per_angle_mean_subscore": {
+      "hip": 83.0,
+      "knee": 0.0,
+      "trunk": 26.1
+    },
+    "velocity_user_dps": {
+      "hip": 3.846,
+      "knee": 4.792,
+      "trunk": 3.009
+    },
+    "velocity_expert_dps": {
+      "hip": 1.359,
+      "knee": 3.04,
+      "trunk": 2.885
+    },
+    "top_issue": "knee",
+    "top_issue_name_kr": "무릎 신전",
+    "frame_scores": [
+      43.5,
+      45.3,
+      45.8,
+      46.2,
+      47.8,
+      47.1,
+      48.2,
+      54.1,
+      51.4,
+      51.0,
+      51.7,
+      51.1,
+      47.9,
+      41.8,
+      34.9,
+      29.8,
+      29.1,
+      23.9,
+      18.5
+    ]
+  },
+  "feedback": {
+    "text": "스파인 스트레치 동작에서 척추를 길게 늘려내려는 움직임은 아주 좋았어요. 특히 무릎을 조금 더 시원하게 펴주시면 동작의 완성도가 훨씬 높아질 거예요. 다음번에는 허벅지 앞쪽 힘으로 무릎 뒤를 바닥에 붙이듯 쭉 펴내는 느낌을 꼭 기억하며 다시 한번 도전해 봐요!",
+    "mode": "online_gemini"
+  },
+  "latency": {
+    "summary": {
+      "init_detector": {
+        "n": 1,
+        "mean_ms": 1441.81,
+        "median_ms": 1441.81,
+        "p95_ms": 1441.81,
+        "p99_ms": 1441.81,
+        "max_ms": 1441.81,
+        "min_ms": 1441.81
+      },
+      "init_lifter": {
+        "n": 1,
+        "mean_ms": 1186.69,
+        "median_ms": 1186.69,
+        "p95_ms": 1186.69,
+        "p99_ms": 1186.69,
+        "max_ms": 1186.69,
+        "min_ms": 1186.69
+      },
+      "mediapipe": {
+        "n": 197,
+        "mean_ms": 67.85,
+        "median_ms": 66.82,
+        "p95_ms": 80.19,
+        "p99_ms": 83.6,
+        "max_ms": 86.46,
+        "min_ms": 59.87
+      },
+      "landmark_smooth": {
+        "n": 197,
+        "mean_ms": 0.05,
+        "median_ms": 0.05,
+        "p95_ms": 0.08,
+        "p99_ms": 0.09,
+        "max_ms": 0.11,
+        "min_ms": 0.04
+      },
+      "lifter": {
+        "n": 197,
+        "mean_ms": 5.88,
+        "median_ms": 5.24,
+        "p95_ms": 6.47,
+        "p99_ms": 7.2,
+        "max_ms": 108.53,
+        "min_ms": 4.54
+      },
+      "frame3d_smooth": {
+        "n": 197,
+        "mean_ms": 12.43,
+        "median_ms": 12.03,
+        "p95_ms": 14.39,
+        "p99_ms": 15.49,
+        "max_ms": 143.81,
+        "min_ms": 0.0
+      },
+      "occlusion_blend": {
+        "n": 197,
+        "mean_ms": 0.03,
+        "median_ms": 0.02,
+        "p95_ms": 0.04,
+        "p99_ms": 0.06,
+        "max_ms": 0.12,
+        "min_ms": 0.0
+      },
+      "bone_lock": {
+        "n": 197,
+        "mean_ms": 8.05,
+        "median_ms": 8.58,
+        "p95_ms": 12.12,
+        "p99_ms": 12.71,
+        "max_ms": 191.4,
+        "min_ms": 0.0
+      },
+      "frame_total": {
+        "n": 196,
+        "mean_ms": 199.14,
+        "median_ms": 180.78,
+        "p95_ms": 278.41,
+        "p99_ms": 1041.64,
+        "max_ms": 1355.3,
+        "min_ms": 121.72
+      },
+      "scoring": {
+        "n": 1,
+        "mean_ms": 1.01,
+        "median_ms": 1.01,
+        "p95_ms": 1.01,
+        "p99_ms": 1.01,
+        "max_ms": 1.01,
+        "min_ms": 1.01
+      },
+      "llm_feedback": {
+        "n": 1,
+        "mean_ms": 10612.83,
+        "median_ms": 10612.83,
+        "p95_ms": 10612.83,
+        "p99_ms": 10612.83,
+        "max_ms": 10612.83,
+        "min_ms": 10612.83
+      }
+    },
+    "samples_count": {
+      "init_detector": 1,
+      "init_lifter": 1,
+      "mediapipe": 197,
+      "landmark_smooth": 197,
+      "lifter": 197,
+      "frame3d_smooth": 197,
+      "occlusion_blend": 197,
+      "bone_lock": 197,
+      "frame_total": 196,
+      "scoring": 1,
+      "llm_feedback": 1
+    }
+  }
+}

@@ -1,0 +1,42 @@
+# onpose_v6 자체 ignore — 상위 longstone/.gitignore 의 *.mp4 / *.task / *.pt 정책을
+# 일부 경로에 한해서 풀어주기 위한 파일.
+
+# ── Python ─────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# ── Env / Secrets ──────────────────────────────────
+.env
+.env.local
+.env.*.local
+app/backend/.env
+app/backend/.env.local
+
+# ── Node / Frontend ────────────────────────────────
+app/frontend/node_modules/
+app/frontend/dist/
+app/frontend/dist-ssr/
+app/frontend/dev-dist/
+# MediaPipe WASM (~32MB) — frontend postinstall이 자동 복사
+app/frontend/public/mediapipe-wasm/
+*.local
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# ── OS / IDE ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# ── 데모/시연 자산은 추적함 (상위 .gitignore 의 *.mp4 / *.task / *.pt / *.onnx 를 override) ──
+!assets/*.mp4
+!app/frontend/public/videos/*.mp4
+!app/frontend/public/models/*.task
+!eval/**/*.onnx
+!core/**/*.onnx
