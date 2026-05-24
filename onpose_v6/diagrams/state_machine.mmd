@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> SELECT
+    SELECT --> INTRO : Pose box 1.4s hover
+    INTRO --> CAPTURE : 3s intro elapsed
+    CAPTURE --> PROCESSING : 5s capture end
+    PROCESSING --> RESULT : Score + LLM done
+    RESULT --> INTRO : Retry
+    RESULT --> SELECT : Choose another
+    RESULT --> [*] : Exit
+
+    note right of CAPTURE
+        Hands free during capture
+        No clicking distortion
+        (mentor key feedback)
+    end note

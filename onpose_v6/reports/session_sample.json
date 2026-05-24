@@ -1,0 +1,81 @@
+{
+  "timestamp": "20260523_120000",
+  "pose": "The_Seal",
+  "score": {
+    "n_frames": 92,
+    "mean_score": 87.3,
+    "ox_accuracy": 88.0,
+    "verdict": "훌륭해요",
+    "per_angle_accuracy": {
+      "knee": 85,
+      "hip": 95,
+      "trunk": 62
+    },
+    "per_angle_mean_diff": {
+      "knee": 4.5,
+      "hip": 2.1,
+      "trunk": 14.0
+    },
+    "per_angle_mean_subscore": {
+      "knee": 90,
+      "hip": 96,
+      "trunk": 72
+    },
+    "top_issue": "trunk",
+    "top_issue_name_kr": "상체 각도",
+    "frame_scores": [
+      80,
+      85,
+      88,
+      90,
+      92,
+      88,
+      87,
+      86
+    ]
+  },
+  "feedback": {
+    "text": "더 씰 자세 정말 잘 따라오셨어요! 이미 합격선(88%)을 훌쩍 넘어서 미세한 마무리만 다듬으면 완벽해질 거예요. 다음에는 상체 정렬을 길게 늘인다는 느낌으로 가져가 보세요. 한 번만 더 해보시면 분명 더 좋아질 거예요!",
+    "mode": "offline_rule"
+  },
+  "latency": {
+    "summary": {
+      "mediapipe": {
+        "n": 92,
+        "mean_ms": 28.5,
+        "p95_ms": 38.2,
+        "max_ms": 45.1
+      },
+      "lifter": {
+        "n": 92,
+        "mean_ms": 5.2,
+        "p95_ms": 7.8,
+        "max_ms": 12.3
+      },
+      "bone_lock": {
+        "n": 92,
+        "mean_ms": 1.4,
+        "p95_ms": 2.1,
+        "max_ms": 3.0
+      },
+      "scoring": {
+        "n": 1,
+        "mean_ms": 12.5,
+        "p95_ms": 12.5,
+        "max_ms": 12.5
+      },
+      "llm_feedback": {
+        "n": 1,
+        "mean_ms": 4.8,
+        "p95_ms": 4.8,
+        "max_ms": 4.8
+      },
+      "frame_total": {
+        "n": 92,
+        "mean_ms": 42.6,
+        "p95_ms": 55.0,
+        "max_ms": 68.0
+      }
+    }
+  }
+}

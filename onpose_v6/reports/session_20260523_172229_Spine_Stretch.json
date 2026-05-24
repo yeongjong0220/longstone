@@ -1,0 +1,147 @@
+{
+  "timestamp": "20260523_172229",
+  "pose": "Spine_Stretch",
+  "score": {
+    "n_frames": 28,
+    "mean_score": 12.4,
+    "ox_accuracy": 0.0,
+    "verdict": "다시 도전",
+    "per_angle_accuracy": {
+      "hip": 0.0,
+      "knee": 0.0,
+      "trunk": 60.7
+    },
+    "per_angle_mean_diff": {
+      "hip": 42.0,
+      "knee": 78.57,
+      "trunk": 19.27
+    },
+    "per_angle_mean_subscore": {
+      "hip": 0.0,
+      "knee": 0.0,
+      "trunk": 62.0
+    },
+    "top_issue": "hip",
+    "top_issue_name_kr": "고관절 굴곡",
+    "frame_scores": [
+      19.2,
+      19.1,
+      19.9,
+      18.5,
+      19.4,
+      17.8,
+      19.0,
+      11.2,
+      16.5,
+      16.1,
+      15.7,
+      17.7,
+      19.6,
+      18.1,
+      16.0,
+      19.3,
+      17.9,
+      16.8,
+      12.0,
+      3.2,
+      4.8,
+      8.0,
+      1.3,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "feedback": {
+    "text": "스파인 스트레치 자세에서 상체 움직임은 이미 60% 이상 멋지게 잘 해내셨어요! 다음번에는 고관절을 조금 더 깊게 접어주는 데 집중하면 훨씬 더 시원한 스트레칭을 느낄 수 있을 거예요. 우리 고관절부터 부드럽게 접는다는 느낌으로 다시 한번 시도해 볼까요?",
+    "mode": "online_gemini"
+  },
+  "latency": {
+    "summary": {
+      "init_detector": {
+        "n": 1,
+        "mean_ms": 748.03,
+        "median_ms": 748.03,
+        "p95_ms": 748.03,
+        "p99_ms": 748.03,
+        "max_ms": 748.03,
+        "min_ms": 748.03
+      },
+      "init_lifter": {
+        "n": 1,
+        "mean_ms": 1676.48,
+        "median_ms": 1676.48,
+        "p95_ms": 1676.48,
+        "p99_ms": 1676.48,
+        "max_ms": 1676.48,
+        "min_ms": 1676.48
+      },
+      "mediapipe": {
+        "n": 775,
+        "mean_ms": 73.73,
+        "median_ms": 74.07,
+        "p95_ms": 95.04,
+        "p99_ms": 103.03,
+        "max_ms": 112.31,
+        "min_ms": 11.81
+      },
+      "lifter": {
+        "n": 744,
+        "mean_ms": 6.33,
+        "median_ms": 5.82,
+        "p95_ms": 7.74,
+        "p99_ms": 9.7,
+        "max_ms": 144.33,
+        "min_ms": 4.54
+      },
+      "bone_lock": {
+        "n": 744,
+        "mean_ms": 17.53,
+        "median_ms": 9.93,
+        "p95_ms": 14.46,
+        "p99_ms": 16.37,
+        "max_ms": 6382.7,
+        "min_ms": 0.0
+      },
+      "frame_total": {
+        "n": 774,
+        "mean_ms": 256.52,
+        "median_ms": 219.4,
+        "p95_ms": 263.44,
+        "p99_ms": 295.01,
+        "max_ms": 10283.64,
+        "min_ms": 136.64
+      },
+      "scoring": {
+        "n": 4,
+        "mean_ms": 0.51,
+        "median_ms": 0.54,
+        "p95_ms": 0.55,
+        "p99_ms": 0.55,
+        "max_ms": 0.55,
+        "min_ms": 0.39
+      },
+      "llm_feedback": {
+        "n": 4,
+        "mean_ms": 8319.86,
+        "median_ms": 8479.77,
+        "p95_ms": 9869.53,
+        "p99_ms": 9869.53,
+        "max_ms": 9869.53,
+        "min_ms": 6450.38
+      }
+    },
+    "samples_count": {
+      "init_detector": 1,
+      "init_lifter": 1,
+      "mediapipe": 775,
+      "lifter": 744,
+      "bone_lock": 744,
+      "frame_total": 774,
+      "scoring": 4,
+      "llm_feedback": 4
+    }
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "timestamp": "20260523_220901",
+  "pose": "Spine_Stretch",
+  "score": {
+    "n_frames": 13,
+    "mean_score": 40.1,
+    "angle_score": 29.4,
+    "velocity_score": 83.1,
+    "ox_accuracy": 0.0,
+    "verdict": "다시 도전",
+    "per_angle_accuracy": {
+      "hip": 0.0,
+      "knee": 0.0,
+      "trunk": 0.0
+    },
+    "per_angle_mean_diff": {
+      "hip": 24.53,
+      "knee": -133.73,
+      "trunk": -32.79
+    },
+    "per_angle_mean_z": {
+      "hip": 1.746,
+      "knee": 31.611,
+      "trunk": 2.255
+    },
+    "per_angle_mean_subscore": {
+      "hip": 50.8,
+      "knee": 0.0,
+      "trunk": 32.4
+    },
+    "velocity_user_dps": {
+      "hip": 0.306,
+      "knee": 0.23,
+      "trunk": 0.384
+    },
+    "velocity_expert_dps": {
+      "hip": 1.359,
+      "knee": 3.04,
+      "trunk": 2.885
+    },
+    "top_issue": "knee",
+    "top_issue_name_kr": "무릎 신전",
+    "frame_scores": [
+      30.2,
+      30.3,
+      29.8,
+      29.2,
+      28.5,
+      28.3,
+      28.3,
+      28.3,
+      28.4,
+      28.8,
+      29.9,
+      30.7,
+      31.0
+    ]
+  },
+  "feedback": {
+    "text": "스파인 스트레치, 시작이 좋습니다! 무릎 신전이(가) 정답에서 평균 -134도 정도 차이가 나는 편이에요, 거기만 조금 더 신경 써 보면 좋아요. 다음에는 무릎 각도를 살짝 더 신경 써 보면 좋을 것 같아요. 이미 거의 다 왔어요, 다음 세트도 같이 가봐요!",
+    "mode": "offline_rule"
+  },
+  "latency": {
+    "summary": {
+      "init_detector": {
+        "n": 1,
+        "mean_ms": 256.45,
+        "median_ms": 256.45,
+        "p95_ms": 256.45,
+        "p99_ms": 256.45,
+        "max_ms": 256.45,
+        "min_ms": 256.45
+      },
+      "init_lifter": {
+        "n": 1,
+        "mean_ms": 30.37,
+        "median_ms": 30.37,
+        "p95_ms": 30.37,
+        "p99_ms": 30.37,
+        "max_ms": 30.37,
+        "min_ms": 30.37
+      },
+      "mediapipe": {
+        "n": 219,
+        "mean_ms": 73.53,
+        "median_ms": 70.95,
+        "p95_ms": 89.46,
+        "p99_ms": 98.2,
+        "max_ms": 102.7,
+        "min_ms": 61.62
+      },
+      "landmark_smooth": {
+        "n": 216,
+        "mean_ms": 0.08,
+        "median_ms": 0.08,
+        "p95_ms": 0.12,
+        "p99_ms": 0.13,
+        "max_ms": 0.14,
+        "min_ms": 0.05
+      },
+      "lifter": {
+        "n": 216,
+        "mean_ms": 6.06,
+        "median_ms": 5.93,
+        "p95_ms": 7.22,
+        "p99_ms": 8.43,
+        "max_ms": 12.56,
+        "min_ms": 4.65
+      },
+      "frame3d_smooth": {
+        "n": 216,
+        "mean_ms": 12.48,
+        "median_ms": 14.07,
+        "p95_ms": 16.07,
+        "p99_ms": 17.66,
+        "max_ms": 45.74,
+        "min_ms": 0.01
+      },
+      "occlusion_blend": {
+        "n": 216,
+        "mean_ms": 0.03,
+        "median_ms": 0.02,
+        "p95_ms": 0.04,
+        "p99_ms": 0.06,
+        "max_ms": 0.1,
+        "min_ms": 0.0
+      },
+      "bone_lock": {
+        "n": 216,
+        "mean_ms": 4.47,
+        "median_ms": 3.68,
+        "p95_ms": 9.83,
+        "p99_ms": 12.31,
+        "max_ms": 46.38,
+        "min_ms": 0.0
+      },
+      "frame_total": {
+        "n": 218,
+        "mean_ms": 394.38,
+        "median_ms": 336.11,
+        "p95_ms": 657.26,
+        "p99_ms": 737.36,
+        "max_ms": 15018.1,
+        "min_ms": 126.26
+      },
+      "scoring": {
+        "n": 3,
+        "mean_ms": 0.59,
+        "median_ms": 0.6,
+        "p95_ms": 0.62,
+        "p99_ms": 0.62,
+        "max_ms": 0.62,
+        "min_ms": 0.53
+      },
+      "llm_feedback": {
+        "n": 3,
+        "mean_ms": 2827.69,
+        "median_ms": 517.29,
+        "p95_ms": 7450.05,
+        "p99_ms": 7450.05,
+        "max_ms": 7450.05,
+        "min_ms": 515.73
+      }
+    },
+    "samples_count": {
+      "init_detector": 1,
+      "init_lifter": 1,
+      "mediapipe": 219,
+      "landmark_smooth": 216,
+      "lifter": 216,
+      "frame3d_smooth": 216,
+      "occlusion_blend": 216,
+      "bone_lock": 216,
+      "frame_total": 218,
+      "scoring": 3,
+      "llm_feedback": 3
+    }
+  }
+}

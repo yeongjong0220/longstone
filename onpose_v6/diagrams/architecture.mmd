@@ -1,0 +1,18 @@
+flowchart LR
+    Cam([Webcam]) --> MP[MediaPipe Heavy<br/>33 keypoints 2D]
+    MP --> Lift[TemporalLifter<br/>2D to 3D 15 joints]
+    Lift --> Ang[3D Angle Calc<br/>hip / knee / trunk]
+    Ang --> Score[Weighted Rule-based<br/>Scoring]
+    Score --> OX[O/X Verdict<br/>Accuracy Pct]
+    OX --> LLM{Online?}
+    LLM -- Yes --> Gemini[Gemini 2.5 Flash<br/>Friendly Coach Prompt]
+    LLM -- No --> Off[Offline Template<br/>Friendly Rule-based]
+    Gemini --> UI3[3-Panel UI]
+    Off --> UI3
+    UI3 --> Show([User Cam +<br/>Expert Video +<br/>Score Panel])
+    Show --> Cam
+
+    classDef new fill:#D4FFB5,stroke:#339933,stroke-width:2px
+    classDef key fill:#FFE4B5,stroke:#cc6600,stroke-width:2px
+    class Score,OX,Off,UI3 new
+    class Lift,Gemini key

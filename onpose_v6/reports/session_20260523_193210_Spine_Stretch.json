@@ -1,0 +1,168 @@
+{
+  "timestamp": "20260523_193210",
+  "pose": "Spine_Stretch",
+  "score": {
+    "n_frames": 19,
+    "mean_score": 0.2,
+    "ox_accuracy": 0.0,
+    "verdict": "다시 도전",
+    "per_angle_accuracy": {
+      "hip": 0.0,
+      "knee": 0.0,
+      "trunk": 0.0
+    },
+    "per_angle_mean_diff": {
+      "hip": 43.09,
+      "knee": 87.66,
+      "trunk": 58.45
+    },
+    "per_angle_mean_subscore": {
+      "hip": 0.4,
+      "knee": 0.0,
+      "trunk": 0.0
+    },
+    "top_issue": "knee",
+    "top_issue_name_kr": "무릎 신전",
+    "frame_scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      3.3,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.1,
+      0.0,
+      0.0
+    ]
+  },
+  "feedback": {
+    "text": "스파인 스트레치에 도전해 주신 열정과 노력만으로도 정말 훌륭하게 시작하셨어요!\n특히 무릎 신전 부분을 조금만 더 신경 써 주시면, 시원하게 스트레치되는 느낌을 더욱 잘 느끼실 수 있을 거예요.\n다음번에는 발끝을 살짝 몸쪽으로 당기며 무릎 뒤쪽을 길게 펴는 느낌으로 다시 한번 시도해 보면 어떨까요?",
+    "mode": "online_gemini"
+  },
+  "latency": {
+    "summary": {
+      "init_detector": {
+        "n": 1,
+        "mean_ms": 1251.57,
+        "median_ms": 1251.57,
+        "p95_ms": 1251.57,
+        "p99_ms": 1251.57,
+        "max_ms": 1251.57,
+        "min_ms": 1251.57
+      },
+      "init_lifter": {
+        "n": 1,
+        "mean_ms": 3520.88,
+        "median_ms": 3520.88,
+        "p95_ms": 3520.88,
+        "p99_ms": 3520.88,
+        "max_ms": 3520.88,
+        "min_ms": 3520.88
+      },
+      "mediapipe": {
+        "n": 216,
+        "mean_ms": 71.93,
+        "median_ms": 71.8,
+        "p95_ms": 84.92,
+        "p99_ms": 87.68,
+        "max_ms": 88.97,
+        "min_ms": 59.64
+      },
+      "landmark_smooth": {
+        "n": 216,
+        "mean_ms": 0.06,
+        "median_ms": 0.05,
+        "p95_ms": 0.08,
+        "p99_ms": 0.09,
+        "max_ms": 0.11,
+        "min_ms": 0.04
+      },
+      "lifter": {
+        "n": 216,
+        "mean_ms": 6.13,
+        "median_ms": 5.71,
+        "p95_ms": 6.84,
+        "p99_ms": 8.01,
+        "max_ms": 84.02,
+        "min_ms": 4.54
+      },
+      "frame3d_smooth": {
+        "n": 216,
+        "mean_ms": 13.65,
+        "median_ms": 13.57,
+        "p95_ms": 14.99,
+        "p99_ms": 16.8,
+        "max_ms": 305.15,
+        "min_ms": 0.01
+      },
+      "occlusion_blend": {
+        "n": 216,
+        "mean_ms": 0.03,
+        "median_ms": 0.02,
+        "p95_ms": 0.05,
+        "p99_ms": 0.06,
+        "max_ms": 0.09,
+        "min_ms": 0.0
+      },
+      "bone_lock": {
+        "n": 216,
+        "mean_ms": 9.04,
+        "median_ms": 5.01,
+        "p95_ms": 11.99,
+        "p99_ms": 12.21,
+        "max_ms": 740.62,
+        "min_ms": 0.0
+      },
+      "frame_total": {
+        "n": 215,
+        "mean_ms": 273.97,
+        "median_ms": 255.11,
+        "p95_ms": 291.56,
+        "p99_ms": 609.69,
+        "max_ms": 8393.62,
+        "min_ms": 140.18
+      },
+      "scoring": {
+        "n": 2,
+        "mean_ms": 0.43,
+        "median_ms": 0.43,
+        "p95_ms": 0.44,
+        "p99_ms": 0.44,
+        "max_ms": 0.44,
+        "min_ms": 0.42
+      },
+      "llm_feedback": {
+        "n": 2,
+        "mean_ms": 8846.8,
+        "median_ms": 8846.8,
+        "p95_ms": 9460.78,
+        "p99_ms": 9460.78,
+        "max_ms": 9460.78,
+        "min_ms": 8232.81
+      }
+    },
+    "samples_count": {
+      "init_detector": 1,
+      "init_lifter": 1,
+      "mediapipe": 216,
+      "landmark_smooth": 216,
+      "lifter": 216,
+      "frame3d_smooth": 216,
+      "occlusion_blend": 216,
+      "bone_lock": 216,
+      "frame_total": 215,
+      "scoring": 2,
+      "llm_feedback": 2
+    }
+  }
+}

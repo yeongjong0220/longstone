@@ -1,0 +1,118 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@theme inline {
+    /* 폰트 */
+    --font-sans: 'Noto Sans KR', -apple-system, 'Apple SD Gothic Neo', sans-serif;
+    --font-heading: var(--font-sans);
+    --font-logo: 'Lobster', cursive;
+
+    /* AURA 브랜드 컬러 (Tailwind 유틸로 노출) */
+    --color-aura-primary: #4F46E5;
+    --color-aura-indigo:  #6366F1;
+    --color-aura-violet:  #7C3AED;
+    --color-aura-ink:     #1A1A1A;
+    --color-aura-sec:     #555555;
+    --color-aura-ter:     #999999;
+    --color-aura-mute:    #C0C0C0;
+
+    /* AURA Glass (Tailwind 유틸로 노출) */
+    --color-aura-glass:        rgba(255, 255, 255, 0.65);
+    --color-aura-glass-strong: rgba(255, 255, 255, 0.82);
+    --color-aura-glass-border: rgba(255, 255, 255, 0.45);
+
+    /* shadcn 변수 매핑 (위 :root의 값을 Tailwind 유틸로 노출) */
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* AURA 배경 그라디언트 (var()로만 사용) */
+    --gradient-bg-soft: linear-gradient(180deg, #E8E4F8 0%, #DDE4F8 30%, #D8E8FA 55%, #E4F2FC 100%);
+    --gradient-bg-onboard: linear-gradient(160deg, #4F46E5 0%, #6366F1 40%, #7C3AED 100%);
+    --gradient-cta: linear-gradient(135deg, #4F46E5 0%, #6366F1 100%);
+
+    /* shadcn 변수 — AURA 값으로 재매핑 */
+    --background: transparent;            /* App 루트 그라디언트가 보이도록 */
+    --foreground: #1A1A1A;
+    --card: rgba(255, 255, 255, 0.82);    /* Glass Strong */
+    --card-foreground: #1A1A1A;
+    --popover: #FFFFFF;
+    --popover-foreground: #1A1A1A;
+    --primary: #4F46E5;
+    --primary-foreground: #FFFFFF;
+    --secondary: rgba(255, 255, 255, 0.65);
+    --secondary-foreground: #1A1A1A;
+    --muted: rgba(255, 255, 255, 0.45);
+    --muted-foreground: #999999;
+    --accent: rgba(79, 70, 229, 0.08);
+    --accent-foreground: #4F46E5;
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: rgba(255, 255, 255, 0.45);
+    --input: rgba(255, 255, 255, 0.65);
+    --ring: #4F46E5;
+    --chart-1: #4F46E5;
+    --chart-2: #6366F1;
+    --chart-3: #7C3AED;
+    --chart-4: #555555;
+    --chart-5: #999999;
+    --radius: 16px;                       /* AURA 카드 기준 */
+    --sidebar: #FFFFFF;
+    --sidebar-foreground: #1A1A1A;
+    --sidebar-primary: #4F46E5;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: rgba(79, 70, 229, 0.08);
+    --sidebar-accent-foreground: #4F46E5;
+    --sidebar-border: rgba(0, 0, 0, 0.06);
+    --sidebar-ring: #4F46E5;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

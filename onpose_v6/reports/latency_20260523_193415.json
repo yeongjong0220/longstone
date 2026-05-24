@@ -1,0 +1,116 @@
+{
+  "summary": {
+    "init_detector": {
+      "n": 1,
+      "mean_ms": 1251.57,
+      "median_ms": 1251.57,
+      "p95_ms": 1251.57,
+      "p99_ms": 1251.57,
+      "max_ms": 1251.57,
+      "min_ms": 1251.57
+    },
+    "init_lifter": {
+      "n": 1,
+      "mean_ms": 3520.88,
+      "median_ms": 3520.88,
+      "p95_ms": 3520.88,
+      "p99_ms": 3520.88,
+      "max_ms": 3520.88,
+      "min_ms": 3520.88
+    },
+    "mediapipe": {
+      "n": 711,
+      "mean_ms": 73.81,
+      "median_ms": 74.72,
+      "p95_ms": 84.89,
+      "p99_ms": 87.08,
+      "max_ms": 90.34,
+      "min_ms": 59.64
+    },
+    "landmark_smooth": {
+      "n": 695,
+      "mean_ms": 0.06,
+      "median_ms": 0.06,
+      "p95_ms": 0.08,
+      "p99_ms": 0.09,
+      "max_ms": 0.18,
+      "min_ms": 0.04
+    },
+    "lifter": {
+      "n": 695,
+      "mean_ms": 6.13,
+      "median_ms": 5.77,
+      "p95_ms": 6.84,
+      "p99_ms": 7.82,
+      "max_ms": 143.71,
+      "min_ms": 4.54
+    },
+    "frame3d_smooth": {
+      "n": 695,
+      "mean_ms": 13.26,
+      "median_ms": 13.79,
+      "p95_ms": 15.23,
+      "p99_ms": 16.71,
+      "max_ms": 305.15,
+      "min_ms": 0.01
+    },
+    "occlusion_blend": {
+      "n": 695,
+      "mean_ms": 0.03,
+      "median_ms": 0.02,
+      "p95_ms": 0.05,
+      "p99_ms": 0.07,
+      "max_ms": 0.09,
+      "min_ms": 0.0
+    },
+    "bone_lock": {
+      "n": 695,
+      "mean_ms": 8.63,
+      "median_ms": 8.57,
+      "p95_ms": 12.14,
+      "p99_ms": 12.76,
+      "max_ms": 740.62,
+      "min_ms": 0.0
+    },
+    "frame_total": {
+      "n": 710,
+      "mean_ms": 269.54,
+      "median_ms": 198.55,
+      "p95_ms": 292.44,
+      "p99_ms": 329.97,
+      "max_ms": 9605.58,
+      "min_ms": 130.26
+    },
+    "scoring": {
+      "n": 4,
+      "mean_ms": 0.4,
+      "median_ms": 0.42,
+      "p95_ms": 0.44,
+      "p99_ms": 0.44,
+      "max_ms": 0.44,
+      "min_ms": 0.33
+    },
+    "llm_feedback": {
+      "n": 4,
+      "mean_ms": 9028.87,
+      "median_ms": 9210.95,
+      "p95_ms": 9460.78,
+      "p99_ms": 9460.78,
+      "max_ms": 9460.78,
+      "min_ms": 8232.81
+    }
+  },
+  "samples_count": {
+    "init_detector": 1,
+    "init_lifter": 1,
+    "mediapipe": 711,
+    "landmark_smooth": 695,
+    "lifter": 695,
+    "frame3d_smooth": 695,
+    "occlusion_blend": 695,
+    "bone_lock": 695,
+    "frame_total": 710,
+    "scoring": 4,
+    "llm_feedback": 4
+  }
+}
