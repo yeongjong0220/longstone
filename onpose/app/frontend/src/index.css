@@ -1,0 +1,120 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@theme inline {
+    /* 폰트 (Pretendard 우선, fallback으로 Noto Sans KR 유지) */
+    --font-sans: 'Pretendard Variable', 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    --font-heading: var(--font-sans);
+    --font-logo: 'Lobster', cursive;
+
+    /* GO Club 팔레트 (AURA 토큰명은 호환을 위해 유지, 값만 보라/라임으로) */
+    --color-aura-primary: #4E45E6;
+    --color-aura-indigo:  #4E45E6;
+    --color-aura-violet:  #3A2FC0;
+    --color-aura-lime:    #E6FB4D;  /* 라임 액센트 */
+    --color-aura-warn:    #FF5A1F;  /* 경고 오렌지 */
+    --color-aura-ink:     #191F28;  /* 화이트 카드 위 본문 */
+    --color-aura-sec:     #4E5968;
+    --color-aura-ter:     #8B95A1;
+    --color-aura-mute:    #B0B8C1;
+
+    /* 서피스 — Glass 토큰명 유지 */
+    --color-aura-glass:        #FFFFFF;
+    --color-aura-glass-strong: #FFFFFF;
+    --color-aura-glass-border: #E5E8EB;
+
+    /* shadcn 변수 매핑 (위 :root의 값을 Tailwind 유틸로 노출) */
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    /* 배경: GO Club 보라 그라디언트 */
+    --gradient-bg-soft: linear-gradient(180deg, #5B4FF0 0%, #4E45E6 52%, #4034C4 100%);
+    --gradient-bg-onboard: linear-gradient(180deg, #07050F 0%, #1A1640 55%, #4E45E6 100%);
+    --gradient-cta: linear-gradient(135deg, #4E45E6 0%, #3A2FC0 100%);
+
+    /* shadcn 변수 — GO Club 값으로 재매핑 */
+    --background: #4E45E6;        /* 기본 바디 = 보라 (포트레이트 화면) */
+    --foreground: #FFFFFF;        /* 보라 위 기본 텍스트 = 흰색 */
+    --card: #FFFFFF;              /* 카드 = 흰색 서피스 */
+    --card-foreground: #191F28;
+    --popover: #FFFFFF;
+    --popover-foreground: #191F28;
+    --primary: #4E45E6;
+    --primary-foreground: #FFFFFF;
+    --secondary: #EAEAFB;        /* 연보라 */
+    --secondary-foreground: #4E45E6;
+    --muted: #F2F4F6;
+    --muted-foreground: #8B95A1;
+    --accent: #F2F4F6;
+    --accent-foreground: #4E45E6;
+    --destructive: #FF5A1F;       /* 경고 오렌지 */
+    --border: #E5E8EB;
+    --input: #F2F4F6;
+    --ring: #4E45E6;
+    --chart-1: #4E45E6;
+    --chart-2: #3A2FC0;
+    --chart-3: #E6FB4D;
+    --chart-4: #4E5968;
+    --chart-5: #8B95A1;
+    --radius: 16px;
+    --sidebar: #FFFFFF;
+    --sidebar-foreground: #191F28;
+    --sidebar-primary: #4E45E6;
+    --sidebar-primary-foreground: #FFFFFF;
+    --sidebar-accent: #EAEAFB;
+    --sidebar-accent-foreground: #4E45E6;
+    --sidebar-border: #E5E8EB;
+    --sidebar-ring: #4E45E6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

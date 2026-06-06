@@ -1,0 +1,9 @@
+# 환경변수 — Gemini API 키 등 비밀값. .env.example 템플릿만 추적.
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# 에이전트 도구 상태 / OS 잔재 (추적 안 함)
+.omc/
+.DS_Store

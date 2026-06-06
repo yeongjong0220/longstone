@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+
+/* Tailwind v4 content 탐지 보강 (root 가 이 폴더라 보통 자동 탐지되지만 명시) */
+@source "../index.html";
+@source "./**/*.{ts,tsx}";
+
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+
+  /* GO Club 팔레트 (레퍼런스 캡쳐에서 추출) */
+  --color-go-primary: #5a4be6; /* 메인 바이올렛 */
+  --color-go-primary-soft: #6f63ec; /* 카드/밝은 면 */
+  --color-go-ink: #14141c; /* 흰 시트 위 텍스트 */
+  --color-go-yellow: #ecff4a; /* 골든아워 카드 */
+  --color-go-orange: #ff7a3c; /* "96% lower" 강조 */
+  --color-go-muted: #8a8a99; /* 보조 텍스트 */
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #050507;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

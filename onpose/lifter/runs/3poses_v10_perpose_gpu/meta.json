@@ -1,0 +1,19 @@
+{
+  "num_train_windows": 41824,
+  "num_val_windows": 544,
+  "num_test_windows": 1296,
+  "num_classes": 3,
+  "phase_scheme": "progress3",
+  "phase_names": [
+    "START",
+    "MIDDLE",
+    "END"
+  ],
+  "loss_weights": {
+    "w_pose": 1.0,
+    "w_phase": 0.2,
+    "w_bone": 0.2,
+    "w_vel": 0.1,
+    "w_angle": 0.1
+  }
+}
